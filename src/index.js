@@ -38,7 +38,9 @@ export default function bindResizeEvents({ wait = defaultWait } = {}) {
  *
  */
 export function unbindResizeEvents() {
-  handlers.forEach((handler) => window.removeEventListener('resize', handler, false))
+  handlers.forEach((handler) =>
+    window.removeEventListener('resize', handler, false)
+  )
 }
 
 /*
