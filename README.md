@@ -59,6 +59,18 @@ bindResizeEvents()
 unbindResizeEvents()
 ```
 
+### In the browser
+
+If you don't have the luxury of using a bundler, you can also
+simply include the script tag and call it a day.
+
+```html
+<script src="https://unpkg.com/resize-start-stop"></script>
+<script>
+  resizeStartStop.bindResizeEvents()
+</script>
+```
+
 ## License
 
 [MIT License](https://opensource.org/licenses/MIT) © Philipp Daun
