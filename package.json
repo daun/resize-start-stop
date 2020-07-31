@@ -1,7 +1,7 @@
 {
   "name": "resize-start-stop",
   "description": "Debounced resizestart and resizestop events on the window",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Philipp Daun <daun@daun.ltd>",
   "license": "MIT",
   "source": "src/index.js",
@@ -20,7 +20,8 @@
     "clean": "rimraf dist",
     "bundle": "microbundle && microbundle -f umd --external none",
     "build": "npm run clean && npm run bundle",
-    "prepublish": "npm run clean && npm run lint && npm run test && npm run build"
+    "prepublish": "npm run clean && npm run lint && npm run test && npm run build",
+    "release": "npm run build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "files": [
     "dist",
