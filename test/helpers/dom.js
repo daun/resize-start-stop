@@ -14,6 +14,12 @@ export const installWindowResizeEvent = () => {
   window.triggerResize = () => {
     window.resizeTo(1000, 1000)
   }
+
+  window.triggerResizeSeries = () => {
+    ;[0, 50, 100].forEach((timeout) => {
+      setTimeout(() => window.triggerResize(), timeout)
+    })
+  }
 }
 
 export const createDocument = () => {

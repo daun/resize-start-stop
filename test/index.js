@@ -27,14 +27,25 @@ describe('bindResizeEvents', function () {
     this.doc()
   })
 
-  it('adds a resizestart event', () => {
-    window.addEventListener('resizestart', () => assert(true))
+  it('adds a resizestart event', (done) => {
+    let count = 0
+    window.addEventListener('resizestart', () => count++)
     window.triggerResize()
+    setTimeout(() => (assert(count === 1), done()), 500)
   })
 
-  it('adds a resizestop event', () => {
-    window.addEventListener('resizestop', () => assert(true))
+  it('adds a resizestop event', (done) => {
+    let count = 0
+    window.addEventListener('resizestop', () => count++)
     window.triggerResize()
+    setTimeout(() => (assert(count === 1), done()), 500)
+  })
+
+  it('resizestart triggers only once', (done) => {
+    let count = 0
+    window.addEventListener('resizestart', () => count++)
+    window.triggerResize()
+    setTimeout(() => (assert(count === 1), done()), 500)
   })
 })
 
@@ -50,25 +61,26 @@ describe('unbindResizeEvents', function () {
     this.doc()
   })
 
-  it('unbinds the resizestart event', () => {
-    let triggered = false
-    window.addEventListener('resizestart', () => (triggered = true))
+  it('unbinds the resizestart event', (done) => {
+    let count = 0
+    window.addEventListener('resizestart', () => count++)
     window.triggerResize()
-    setTimeout(() => assert(triggered === false), 500)
+    setTimeout(() => (assert(count === 0), done()), 500)
   })
 
-  it('unbinds the resizestop event', () => {
-    let triggered = false
-    window.addEventListener('resizestop', () => (triggered = true))
+  it('unbinds the resizestop event', (done) => {
+    let count = 0
+    window.addEventListener('resizestop', () => count++)
     window.triggerResize()
-    setTimeout(() => assert(triggered === false), 500)
+    setTimeout(() => (assert(count === 0), done()), 500)
   })
 })
 
 describe('toggleClassDuringResize', function () {
   this.timeout(timeout)
 
-  const defaultClassName = 'is-resizing'
+  const className = 'is-resizing'
+  const element = () => document.documentElement
 
   beforeEach(function () {
     this.doc = createDocument()
@@ -81,40 +93,43 @@ describe('toggleClassDuringResize', function () {
 
   it('adds a classname on resize', () => {
     window.triggerResize()
-    assert(document.documentElement.classList.contains(defaultClassName))
+    assert(element().classList.contains(className))
   })
+
   it('removes the classname after resize', (done) => {
     window.triggerResize()
-    setTimeout(() => {
-      assert(!document.documentElement.classList.contains(defaultClassName))
-      done()
-    }, 500)
+    setTimeout(
+      () => (assert(!element().classList.contains(className)), done()),
+      500
+    )
   })
 })
 
 describe('toggleClassDuringResize with options', function () {
   this.timeout(timeout)
 
-  const customClassName = 'resize-classname-test'
+  const className = 'custom-resize-classname'
+  const element = () => document.body
 
   beforeEach(function () {
     this.doc = createDocument()
-    toggleClassDuringResize({ className: customClassName })
+    toggleClassDuringResize({ className, element: element() })
   })
   afterEach(function () {
     unbindResizeEvents()
     this.doc()
   })
 
-  it('takes a custom class name', () => {
+  it('adds a custom classname on resize', () => {
     window.triggerResize()
-    assert(document.documentElement.classList.contains(customClassName))
+    assert(element().classList.contains(className))
   })
-  it('removes the classname after resize', (done) => {
+
+  it('removes the custom classname after resize', (done) => {
     window.triggerResize()
-    setTimeout(() => {
-      assert(!document.documentElement.classList.contains(customClassName))
-      done()
-    }, 500)
+    setTimeout(
+      () => (assert(!element().classList.contains(className)), done()),
+      500
+    )
   })
 })
