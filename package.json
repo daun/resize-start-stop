@@ -1,7 +1,7 @@
 {
   "name": "resize-start-stop",
   "description": "Debounced resizestart and resizestop events on the window",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Philipp Daun <daun@daun.ltd>)",
   "license": "MIT",
   "source": "src/index.js",
