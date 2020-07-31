@@ -33,7 +33,10 @@
   "keywords": [
     "javascript",
     "events",
+    "window",
     "resize",
+    "resizestart",
+    "resizestop",
     "debounce"
   ],
   "bugs": {
