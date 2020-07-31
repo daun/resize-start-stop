@@ -16,6 +16,9 @@ npm install resize-start-stop
 
 ## Usage
 
+Import and call `bindResizeEvents()` to install debounced `resizestart` and
+`resizestop` events on the window.
+
 ```js
 import bindResizeEvents from 'resize-start-stop'
 
@@ -25,7 +28,10 @@ window.addEventListener('resizestart', () => { console.log('Start') })
 window.addEventListener('resizestop', () => { console.log('Stop') })
 ```
 
-### Unbinding events
+### Cleaning up
+
+If you don't need the installed events anymore, import and call
+`unbindResizeEvents()`.
 
 ```js
 import bindResizeEvents, { unbindResizeEvents } from 'resize-start-stop'
@@ -40,7 +46,7 @@ unbindResizeEvents()
 ### Toggle class name during resize
 
 The package includes a helper for the most common use case: toggling a
-classname on the `html` element during resize.
+class name on the `html` element during resize.
 
 ```js
 import { toggleClassDuringResize } from 'resize-start-stop'
