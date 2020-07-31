@@ -1,4 +1,4 @@
-import debounce from 'lodash/debounce'
+import debounce from 'debounce'
 
 /*
  * General wait time for throttling & debouncing (ms)
@@ -20,7 +20,7 @@ export function bindResizeEvents({ wait = defaultWait } = {}) {
   // prettier-ignore
   const startHandler = debounce(() => {
     window.dispatchEvent(new Event('resizestart'))
-  }, wait, { leading: true, trailing: false })
+  }, wait, true)
 
   // prettier-ignore
   const stopHandler = debounce(() => {
@@ -41,7 +41,7 @@ export function unbindResizeEvents() {
   let handler
   while ((handler = handlers.pop())) {
     window.removeEventListener('resize', handler, false)
-    handler.cancel()
+    handler.clear()
   }
 }
 
