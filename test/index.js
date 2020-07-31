@@ -1,68 +1,120 @@
 import { assert } from 'chai'
 
-import jsdom from 'jsdom-global'
+import createDocument from './helpers/dom'
 
-jsdom()
+import bindResizeEvents, {
+  unbindResizeEvents,
+  toggleClassDuringResize
+} from '../src'
 
-// Simulate window resize event
-const resizeEvent = document.createEvent('Event')
-resizeEvent.initEvent('resize', true, true)
+const timeout = 1000
 
-window.resizeTo = (width, height) => {
-  window.innerWidth = width || global.window.innerWidth
-  window.innerHeight = height || global.window.innerHeight
-  window.dispatchEvent(resizeEvent)
-}
-
-import bindResizeEvents, { toggleClassDuringResize } from '../src'
-bindResizeEvents()
-
-describe('Library', function () {
+describe('resize-start-stop', function () {
   it('exports a function', () => {
-    assert(typeof bindResizeEvents === 'function', 'instance not a function')
+    assert(typeof bindResizeEvents === 'function')
   })
 })
 
-describe('Events', function () {
-  this.timeout(1000)
+describe('bindResizeEvents', function () {
+  this.timeout(timeout)
 
-  it('triggers a resizestart event on resize', (done) => {
-    let triggered = false
-    window.addEventListener('resizestart', () => {
-      !triggered && done()
-      triggered = true
-    })
-    window.resizeTo(800, 1000)
+  beforeEach(function () {
+    this.doc = createDocument()
+    bindResizeEvents()
   })
-  it('triggers a resizestop after resize', (done) => {
-    let triggered = false
-    window.addEventListener('resizestop', () => {
-      !triggered && done()
-      triggered = true
-    })
-    window.resizeTo(600, 1000)
+  afterEach(function () {
+    unbindResizeEvents()
+    this.doc()
+  })
+
+  it('adds a resizestart event', () => {
+    window.addEventListener('resizestart', () => assert(true))
+    window.triggerResize()
+  })
+
+  it('adds a resizestop event', () => {
+    window.addEventListener('resizestop', () => assert(true))
+    window.triggerResize()
   })
 })
 
-describe('Class names', function () {
-  this.timeout(1000)
+describe('unbindResizeEvents', function () {
+  this.timeout(timeout)
 
-  const className = 'resize-classname-test'
-  toggleClassDuringResize({ className })
+  beforeEach(function () {
+    this.doc = createDocument()
+    bindResizeEvents()
+    unbindResizeEvents()
+  })
+  afterEach(function () {
+    this.doc()
+  })
+
+  it('unbinds the resizestart event', () => {
+    let triggered = false
+    window.addEventListener('resizestart', () => (triggered = true))
+    window.triggerResize()
+    setTimeout(() => assert(triggered === false), 500)
+  })
+
+  it('unbinds the resizestop event', () => {
+    let triggered = false
+    window.addEventListener('resizestop', () => (triggered = true))
+    window.triggerResize()
+    setTimeout(() => assert(triggered === false), 500)
+  })
+})
+
+describe('toggleClassDuringResize', function () {
+  this.timeout(timeout)
+
+  const defaultClassName = 'is-resizing'
+
+  beforeEach(function () {
+    this.doc = createDocument()
+    toggleClassDuringResize()
+  })
+  afterEach(function () {
+    unbindResizeEvents()
+    this.doc()
+  })
 
   it('adds a classname on resize', () => {
-    window.resizeTo(800, 1000)
-    assert(
-      document.documentElement.classList.contains(className),
-      'class name was not added'
-    )
+    window.triggerResize()
+    assert(document.documentElement.classList.contains(defaultClassName))
   })
   it('removes the classname after resize', (done) => {
-    window.resizeTo(600, 1000)
+    window.triggerResize()
     setTimeout(() => {
-      if (!document.documentElement.classList.contains(className)) {
-        done()
-      }
+      assert(!document.documentElement.classList.contains(defaultClassName))
+      done()
+    }, 500)
+  })
+})
+
+describe('toggleClassDuringResize with options', function () {
+  this.timeout(timeout)
+
+  const customClassName = 'resize-classname-test'
+
+  beforeEach(function () {
+    this.doc = createDocument()
+    toggleClassDuringResize({ className: customClassName })
+  })
+  afterEach(function () {
+    unbindResizeEvents()
+    this.doc()
+  })
+
+  it('takes a custom class name', () => {
+    window.triggerResize()
+    assert(document.documentElement.classList.contains(customClassName))
+  })
+  it('removes the classname after resize', (done) => {
+    window.triggerResize()
+    setTimeout(() => {
+      assert(!document.documentElement.classList.contains(customClassName))
+      done()
     }, 500)
   })
 })
