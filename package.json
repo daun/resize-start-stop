@@ -14,6 +14,8 @@
     "test:only": "mocha --require esm --require jsdom-global/register test/**/*.js",
     "test:watch": "npm test -- --watch",
     "cover": "nyc --check-coverage npm run test:only",
+    "cover:lcov": "nyc --reporter=lcov npm run test:only",
+    "cover:codecov": "npm run cover:lcov && cat ./coverage/lcov.info | codecov",
     "lint": "eslint src test",
     "clean": "rimraf dist",
     "bundle": "microbundle",
@@ -54,6 +56,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "codecov": "^3.7.2",
     "lodash": "^4.17.19"
   }
 }
