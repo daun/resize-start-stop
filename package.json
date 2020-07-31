@@ -18,7 +18,7 @@
     "cover:codecov": "npm run cover:lcov && cat ./coverage/lcov.info | codecov",
     "lint": "eslint src test",
     "clean": "rimraf dist",
-    "bundle": "microbundle && microbundle -f iife --external none",
+    "bundle": "microbundle && microbundle -f umd --external none",
     "build": "npm run clean && npm run bundle",
     "prepublish": "npm run clean && npm run lint && npm run test && npm run build"
   },
