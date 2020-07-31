@@ -38,9 +38,11 @@ export default function bindResizeEvents({ wait = defaultWait } = {}) {
  *
  */
 export function unbindResizeEvents() {
-  handlers.forEach((handler) =>
+  let handler
+  while ((handler = handlers.pop())) {
     window.removeEventListener('resize', handler, false)
-  )
+    handler.cancel()
+  }
 }
 
 /*
