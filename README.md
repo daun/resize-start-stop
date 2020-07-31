@@ -1,7 +1,12 @@
 # resizestart & resizestop
 
-Debounced `resizestart` and `resizestop` events on the window. Great for deactivating animations
-during window resize.
+[![NPM version](https://img.shields.io/npm/v/resize-start-stop)](https://www.npmjs.com/package/resize-start-stop)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/resize-start-stop?label=size)](https://bundlephobia.com/result?p=resize-start-stop)
+[![GitHub license](https://img.shields.io/github/license/daun/resize-start-stop)](./LICENSE)
+![Codecov](https://img.shields.io/codecov/c/github/daun/resize-start-stop)
+
+Debounced `resizestart` and `resizestop` events on the window. Great for
+disabling transitions and animations during window resize.
 
 ## Installation
 
