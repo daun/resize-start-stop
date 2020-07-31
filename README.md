@@ -1,4 +1,4 @@
-# resizestart & resizestop
+# resizestart & resizestop events
 
 [![NPM version](https://img.shields.io/npm/v/resize-start-stop)](https://www.npmjs.com/package/resize-start-stop)
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/resize-start-stop?label=size)](https://bundlephobia.com/result?p=resize-start-stop)
@@ -6,8 +6,20 @@
 ![Travis Build](https://img.shields.io/travis/com/daun/resize-start-stop)
 ![Codecov](https://img.shields.io/codecov/c/github/daun/resize-start-stop)
 
-Debounced `resizestart` and `resizestop` events on the window. Great for
-disabling transitions and animations during window resize.
+Debounced resize events: know when a user started or stopped resizing the window.
+
+## Why would I need this?
+
+![Debounce](./docs/debounce.svg)
+
+The window's `resize` event is triggered continously and often. That's bad news
+for performance. In most cases, what we really want to know is when the user has started or stopped resizing the window.
+
+## What does it do?
+
+This package will trigger debounced resize events on the window. Simply replace
+your old `resize` event listeners with more performant `resizestart` and
+`resizestop` listeners.
 
 ## Installation
 
@@ -25,19 +37,31 @@ import { bindResizeEvents } from 'resize-start-stop'
 
 bindResizeEvents()
 
-window.addEventListener('resizestart', () => { console.log('Start') })
-window.addEventListener('resizestop', () => { console.log('Stop') })
+window.addEventListener('resizestart', () => { console.log('Resizing') })
+window.addEventListener('resizestop', () => { console.log('Resized') })
 ```
 
 ### Toggle class name during resize
 
-The package includes a helper for the most common use case: toggling a
-class name on the `html` element during resize.
+The package includes a helper for the most common use case: toggling a class
+name on the `html` element during resize. Great for disabling transitions
+and animations while crossing breakpoint boundaries.
 
 ```js
 import { toggleClassDuringResize } from 'resize-start-stop'
 
-// Default options
+toggleClassDuringResize()
+```
+
+```css
+html.is-resizing * {
+  transition: none !important;
+}
+```
+
+All options and their defaults:
+
+```js
 toggleClassDuringResize({
   className: 'is-resizing',
   element: document.documentElement,
@@ -74,4 +98,4 @@ simply include the script tag and call it a day.
 
 ## License
 
-[MIT License](https://opensource.org/licenses/MIT) © Philipp Daun
+[MIT](https://opensource.org/licenses/MIT)
