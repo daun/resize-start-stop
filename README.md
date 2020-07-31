@@ -28,21 +28,6 @@ window.addEventListener('resizestart', () => { console.log('Start') })
 window.addEventListener('resizestop', () => { console.log('Stop') })
 ```
 
-### Cleaning up
-
-If you don't need the installed events anymore, import and call
-`unbindResizeEvents()`.
-
-```js
-import bindResizeEvents, { unbindResizeEvents } from 'resize-start-stop'
-
-// Bind events
-bindResizeEvents()
-
-// Unbind at later stage
-unbindResizeEvents()
-```
-
 ### Toggle class name during resize
 
 The package includes a helper for the most common use case: toggling a
@@ -57,6 +42,21 @@ toggleClassDuringResize({
   element: document.documentElement,
   wait: 200
 })
+```
+
+### Cleaning up
+
+If you don't need the installed events anymore, import and call
+`unbindResizeEvents()`.
+
+```js
+import bindResizeEvents, { unbindResizeEvents } from 'resize-start-stop'
+
+// Bind events
+bindResizeEvents()
+
+// Unbind at later stage
+unbindResizeEvents()
 ```
 
 ## License
