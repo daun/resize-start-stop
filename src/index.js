@@ -16,7 +16,7 @@ const handlers = []
  * Bind `resizestart` and `resizestop` events
  *
  */
-export default function bindResizeEvents({ wait = defaultWait } = {}) {
+export function bindResizeEvents({ wait = defaultWait } = {}) {
   // prettier-ignore
   const startHandler = debounce(() => {
     window.dispatchEvent(new Event('resizestart'))
@@ -68,3 +68,5 @@ export function toggleClassDuringResize({
     element.classList.remove(className)
   }, false)
 }
+
+export default bindResizeEvents

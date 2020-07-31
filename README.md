@@ -20,7 +20,7 @@ Import and call `bindResizeEvents()` to install debounced `resizestart` and
 `resizestop` events on the window.
 
 ```js
-import bindResizeEvents from 'resize-start-stop'
+import { bindResizeEvents } from 'resize-start-stop'
 
 bindResizeEvents()
 
@@ -50,7 +50,7 @@ If you don't need the installed events anymore, import and call
 `unbindResizeEvents()`.
 
 ```js
-import bindResizeEvents, { unbindResizeEvents } from 'resize-start-stop'
+import { bindResizeEvents, unbindResizeEvents } from 'resize-start-stop'
 
 // Bind events
 bindResizeEvents()

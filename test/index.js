@@ -2,7 +2,8 @@ import { assert } from 'chai'
 
 import createDocument from './helpers/dom'
 
-import bindResizeEvents, {
+import {
+  bindResizeEvents,
   unbindResizeEvents,
   toggleClassDuringResize
 } from '../src'
